@@ -8,7 +8,14 @@
 import Foundation
 /// Отвечает за загрузку данных по URL
 /// сетевой клиент для получения данных с API IMDb
-struct NetworkClient{
+///
+
+protocol NetworkRouting{
+    func fetch(url: URL, handler: @escaping (Result<Data, Error>) -> Void)
+}
+
+
+struct NetworkClient: NetworkRouting{
     
     private enum NetworkError: LocalizedError{
         
@@ -42,7 +49,9 @@ struct NetworkClient{
             }
             
             // Возвращаем данные
-            guard let data = data else { return }
+            guard let data = data else {
+                return // если данные пустые
+            }
             handler(.success(data)) // данные возвращаются с использованием handler
             
         }

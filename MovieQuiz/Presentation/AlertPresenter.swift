@@ -20,7 +20,8 @@ class AlertPresenter: AlertPresenterProtocol{
         let alert = UIAlertController(title: result.title,
                                       message: result.text,
                                       preferredStyle: .alert)
-    
+        alert.view.accessibilityIdentifier = "id"
+        
         let action = UIAlertAction(title: "Сыграть еще раз",
                                    style: .default,
                                    handler: {_ in result.completition() })

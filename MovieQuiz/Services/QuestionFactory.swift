@@ -10,14 +10,14 @@ import Foundation
 class QuestionFactory: QuestionFactoryProtocol { //устанавливаем протокол, в котором содержится метод requestNextQuestion
     
     private let moviesLoader: MoviesLoading //связываем загрузчик с QuestionFactory
-
+    
     weak var delegate: QuestionFactoryDelegate?  //фабрика будет общаться с этим свойством
     //Мало создать фабрику и делегата — нужно как-то сообщить фабрике о делегате.
     
     init(delegate: QuestionFactoryDelegate?, moviesLoader: MoviesLoading) { // тот, кто будет инициализировать фабрику должен будет указать ее делегата
         self.delegate = delegate
         self.moviesLoader = moviesLoader
-    } 
+    }
     
     private var movies: [MostPopularMovie] = []
     
@@ -38,26 +38,26 @@ class QuestionFactory: QuestionFactoryProtocol { //устанавливаем п
     
     
     // MARK: исходные данные
-//    private let questions: [QuizQuestion] = [
-//                                     QuizQuestion(image: "The Godfather", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-//                                     QuizQuestion(image: "The Dark Knight", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-//                                     QuizQuestion(image: "Kill Bill", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-//                                     QuizQuestion(image: "The Avengers", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-//                                     QuizQuestion(image: "Deadpool", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-//                                     QuizQuestion(image: "The Green Knight", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-//                                     QuizQuestion(image: "Old", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-//                                     QuizQuestion(image: "The Ice Age Adventures of Buck Wild", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-//                                     QuizQuestion(image: "Tesla", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-//                                     QuizQuestion(image: "Vivarium", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-//                                     ]
+    //    private let questions: [QuizQuestion] = [
+    //                                     QuizQuestion(image: "The Godfather", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
+    //                                     QuizQuestion(image: "The Dark Knight", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
+    //                                     QuizQuestion(image: "Kill Bill", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
+    //                                     QuizQuestion(image: "The Avengers", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
+    //                                     QuizQuestion(image: "Deadpool", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
+    //                                     QuizQuestion(image: "The Green Knight", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
+    //                                     QuizQuestion(image: "Old", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
+    //                                     QuizQuestion(image: "The Ice Age Adventures of Buck Wild", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
+    //                                     QuizQuestion(image: "Tesla", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
+    //                                     QuizQuestion(image: "Vivarium", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
+    //                                     ]
     
     func requestNextQuestion() {                       // 1
-//        guard let index = (0..<questions.count).randomElement() else {  // 2
-//            delegate?.didReceiveNextQuestion(question: nil) //отправляем в делегат пустоту
-//            return
-//        }
-//        let question = questions[safe: index]
-//        delegate?.didReceiveNextQuestion(question: question) //отправляем в делегат вопрос
+        //        guard let index = (0..<questions.count).randomElement() else {  // 2
+        //            delegate?.didReceiveNextQuestion(question: nil) //отправляем в делегат пустоту
+        //            return
+        //        }
+        //        let question = questions[safe: index]
+        //        delegate?.didReceiveNextQuestion(question: question) //отправляем в делегат вопрос
         
         
         DispatchQueue.global().async{ [weak self] in // перевод в другой поток
@@ -75,6 +75,7 @@ class QuestionFactory: QuestionFactoryProtocol { //устанавливаем п
                 DispatchQueue.main.async(){ [weak self] in // возвращение в основной поток
                     guard let self = self else {return}
                     self.delegate?.didFailToLoadData(with: MoviesLoader.ErrorList.imageError)
+                    return
                 }
             }
             
@@ -92,5 +93,5 @@ class QuestionFactory: QuestionFactoryProtocol { //устанавливаем п
                 self.delegate?.didReceiveNextQuestion(question: question) // показываем новый вопрос
             }
         }
-    } 
+    }
 } 
