@@ -12,17 +12,17 @@ import UIKit
 final class MovieQuizPresenter: QuestionFactoryDelegate{
     
     private var currentIndex: Int = 0
-    let questionsAmount: Int = 10
-    var correctCount: Int = 0
+    private let questionsAmount: Int = 10
+    private var correctCount: Int = 0
     
-    var currentQuestion: QuizQuestion? // аналогично, делаем через композицию
-    weak var viewController : MovieQuizViewController? // слабая ссылка на вьюконтроллер
+    private var currentQuestion: QuizQuestion? // аналогично, делаем через композицию
+    private weak var viewController : MQVCProtocol? // слабая ссылка на вьюконтроллер
 
     
-    var questionFactory: QuestionFactoryProtocol?
+    private var questionFactory: QuestionFactoryProtocol?
+    private var statisticService: StatisticService? = StatisticServiceImplementation()
     
-    
-    init(viewController: MovieQuizViewController) {
+    init(viewController: MQVCProtocol) {
         self.viewController = viewController
         self.questionFactory = QuestionFactory(delegate: self, moviesLoader: MoviesLoader()) //здесь инициализируем фабрику
         
@@ -30,9 +30,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate{
         
     }
 
-    
-    private var statisticService: StatisticService? = StatisticServiceImplementation()
-    
+
     
     //вынесли всю логику работы с переменными этого класса для использования в MQVC
     func isLastQuestion() -> Bool{
@@ -69,13 +67,13 @@ final class MovieQuizPresenter: QuestionFactoryDelegate{
     }
     
     
-    func didAnswer(isYes: Bool){
+    private func didAnswer(isYes: Bool){
         guard let currentQuestion = currentQuestion else {
             return
         }
         
         let currentAnswer = isYes
-        viewController?.showAnswerResult(isCorrect: currentAnswer == currentQuestion.correctAnswer)
+        proceedWithAnswer(isCorrect: currentAnswer == currentQuestion.correctAnswer)
     }
     
     
@@ -99,7 +97,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate{
     
     // основная функция, которая отвечает за логику того,
     //что будет показано на экране в зависимости от номера текущего вопроса
-    func showNextQuestionOrResults() {
+    private func proceedToNextQuestionOrResults() {
         
         if self.isLastQuestion(){
             
@@ -149,6 +147,22 @@ final class MovieQuizPresenter: QuestionFactoryDelegate{
     func didFailToLoadData(with error: Error) { // функция для отображения ошибки
         viewController?.showNetworkError(message: error.localizedDescription)
     }
+    
+    
+    // функция отображения информации о правильности/ неправильности ответа на текущий вопрос
+    // в ней же делается переход на след вопрос
+    private func proceedWithAnswer(isCorrect: Bool) {
+
+        didCorrectAnswer(isCorrectAnsw: isCorrect)
+        viewController?.workWithImageBorders(isCorrect: isCorrect)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0){ [weak self] in
+            
+            guard let self = self else {return}
+            self.proceedToNextQuestionOrResults()
+        }
+    }
+    
     
     
 }

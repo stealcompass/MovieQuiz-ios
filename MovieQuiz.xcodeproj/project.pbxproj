@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		140473A92945D6D000140930 /* MQVCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140473A82945D6D000140930 /* MQVCProtocol.swift */; };
+		140473AB2945D98B00140930 /* MQVPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140473AA2945D98B00140930 /* MQVPresenterTests.swift */; };
 		141CF001293E1BB100BEC199 /* MovieQuizPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141CF000293E1BB100BEC199 /* MovieQuizPresenter.swift */; };
 		14742C9829102BE600E77439 /* YSDisplay-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14742C9629102BE600E77439 /* YSDisplay-Medium.ttf */; };
 		14742C9929102BE600E77439 /* YSDisplay-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14742C9729102BE600E77439 /* YSDisplay-Bold.ttf */; };
@@ -55,6 +57,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		140473A82945D6D000140930 /* MQVCProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQVCProtocol.swift; sourceTree = "<group>"; };
+		140473AA2945D98B00140930 /* MQVPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQVPresenterTests.swift; sourceTree = "<group>"; };
 		141CF000293E1BB100BEC199 /* MovieQuizPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieQuizPresenter.swift; sourceTree = "<group>"; };
 		14742C9629102BE600E77439 /* YSDisplay-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YSDisplay-Medium.ttf"; sourceTree = "<group>"; };
 		14742C9729102BE600E77439 /* YSDisplay-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YSDisplay-Bold.ttf"; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 				14742CC129210F5400E77439 /* AlertPresenterProtocol.swift */,
 				14742CC3292381C400E77439 /* StatisticService.swift */,
 				14742CCD292DFA2500E77439 /* MoviesLoader.swift */,
+				140473A82945D6D000140930 /* MQVCProtocol.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -153,6 +158,7 @@
 			children = (
 				14742CE32939369500E77439 /* ArrayTests.swift */,
 				14C4BF1E293A1D9B007ADE39 /* MoviesLoaderTests.swift */,
+				140473AA2945D98B00140930 /* MQVPresenterTests.swift */,
 			);
 			path = MovieQuizTests;
 			sourceTree = "<group>";
@@ -406,6 +412,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14742CE42939369500E77439 /* ArrayTests.swift in Sources */,
+				140473AB2945D98B00140930 /* MQVPresenterTests.swift in Sources */,
 				14C4BF1F293A1D9B007ADE39 /* MoviesLoaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -425,6 +432,7 @@
 				141CF001293E1BB100BEC199 /* MovieQuizPresenter.swift in Sources */,
 				AD5EE5DE284D7887003966EF /* UIColor+Extensions.swift in Sources */,
 				14742CC02920FC9B00E77439 /* AlertPresenter.swift in Sources */,
+				140473A92945D6D000140930 /* MQVCProtocol.swift in Sources */,
 				14742CBE2920FC3400E77439 /* AlertModel.swift in Sources */,
 				14742CCC292DF6BC00E77439 /* MostPopularMovies.swift in Sources */,
 				AD7AFA552836189F00399704 /* Array+Extensions.swift in Sources */,

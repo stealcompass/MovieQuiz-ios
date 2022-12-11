@@ -1,10 +1,9 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController {
+final class MovieQuizViewController: UIViewController, MQVCProtocol {
     
     private var alert: AlertPresenterProtocol?
     private var presenter: MovieQuizPresenter!
-
     
     
     @IBOutlet private var activityIndicator: UIActivityIndicatorView!
@@ -69,33 +68,10 @@ final class MovieQuizViewController: UIViewController {
     
     
     
-    // функция отображения информации о правильности/ неправильности ответа на текущий вопрос
-    // в ней же делается переход на след вопрос
-    func showAnswerResult(isCorrect: Bool) {
-        imageView.layer.masksToBounds = true
-        imageView.layer.borderWidth = 8
-        imageView.layer.cornerRadius = 20
-        
-        presenter.didCorrectAnswer(isCorrectAnsw: isCorrect)
-        
-        if isCorrect {
-            imageView.layer.borderColor = UIColor.ypGreen.cgColor
-        } else {
-            imageView.layer.borderColor = UIColor.ypRed.cgColor
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0){ [weak self] in
-            guard let self = self else {return}
-            
-            self.imageView.layer.borderWidth = 0
-            self.presenter.showNextQuestionOrResults()
-        }
-    }
-    
-    
     //показываем новую картинку
      func show(quiz step: QuizStepViewModel) {
         // здесь мы заполняем нашу картинку, текст и счётчик данными
+        imageView.layer.borderWidth = 0
         imageView.image =  step.image
         counterLabel.text = step.questionNumber
         textLabel.text = step.question
@@ -105,5 +81,13 @@ final class MovieQuizViewController: UIViewController {
     func showAlertFin(viewModel: AlertModel){
         alert?.showAlert(result: viewModel)
     }
+    
+    
+    func workWithImageBorders(isCorrect: Bool){
+        imageView.layer.masksToBounds = true
+        imageView.layer.borderWidth = 8
+        imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+    }
+  
 }
 
